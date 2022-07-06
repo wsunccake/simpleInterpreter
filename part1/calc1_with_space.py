@@ -24,6 +24,18 @@ class Interpreter:
     """
     >>> Interpreter('1+2').expr()
     3
+
+    >>> Interpreter('1 +2').expr()
+    3
+
+    >>> Interpreter('1+ 2').expr()
+    3
+
+    >>> Interpreter('1 + 2').expr()
+    3
+
+    >>> Interpreter('1 + 2 ').expr()
+    3
     """
 
     def __init__(self, text) -> None:
@@ -36,6 +48,9 @@ class Interpreter:
 
     def get_next_token(self):
         text = self.text
+
+        while self.pos < len(text) and text[self.pos] == ' ':
+            self.pos += 1
 
         if self.pos > len(text) - 1:
             token = Token(TokenType.EOF, None)
